@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.listener.RecordInterceptor;
 
 import java.util.HashMap;
 
@@ -39,23 +38,15 @@ public class StringConsumerConfig {
         return factory;
     }
 
-//    @Bean
-//    public ConcurrentKafkaListenerContainerFactory<String, String> validMessageContainerFactory(
-//            ConsumerFactory<String, String> consumerFactory
-//    ) {
-//        var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
-//        factory.setConsumerFactory(consumerFactory);
-//        factory.setRecordInterceptor(validMessage());
-//        return factory;
-//    }
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
 
-//    private RecordInterceptor<String, String> validMessage() {
-//        return record -> {
-//            if(record.value().contains("Teste")) {
-//                log.info("Posssui a palavra Teste");
-//                return record;
-//            }
-//            return record;
-//        };
-//    }
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory());
+        return factory;
+    }
+
+
+
 }
